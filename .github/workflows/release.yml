@@ -1,0 +1,33 @@
+name: Release flow packages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "flows/**"
+      - ".github/scripts/**"
+      - ".github/workflows/release.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-packages
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install --no-save js-yaml
+      - run: node .github/scripts/validate-flows.mjs
+      - run: node .github/scripts/build-flows.mjs
+      - name: Publish immutable releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node .github/scripts/publish-releases.mjs

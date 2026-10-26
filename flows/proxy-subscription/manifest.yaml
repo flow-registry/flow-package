@@ -1,0 +1,20 @@
+flow: "1"
+name: "代理订阅"
+description: "12 小时一刷：拉取订阅（Clash YAML 或 vmess/vless/trojan/anytls/hy2 分享链接），解析成节点后经 installNodes intent 交给宿主写入设置。订阅地址在设置页「订阅地址」维护，经 storage.kv 的 proxy.subscription.url 读取。"
+
+trigger:
+  every: "12h"
+
+context:
+  onStepError: ABORT_FLOW
+  maxFires: 10000
+
+import:
+  - "scripts/subscribe.js"
+
+flowView:
+  cell: "views/flow.cell.yaml"
+
+steps:
+  - js: subscribe.run
+    arguments: {}

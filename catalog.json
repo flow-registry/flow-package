@@ -1,0 +1,72 @@
+[
+  {
+    "id": "proxy-subscription",
+    "name": "代理订阅",
+    "author": "assistbox",
+    "description": "12 小时一刷：拉取订阅（Clash YAML 或 vmess/vless/trojan/anytls/hy2 分享链接），解析成节点后经 installNodes intent 交给宿主写入设置。订阅地址在设置页「订阅地址」维护，经 storage.kv 的 proxy.subscription.url 读取。",
+    "version": "1.0.0",
+    "minApp": "0.1.0",
+    "tags": [
+      "网络",
+      "proxy",
+      "工具"
+    ],
+    "capabilities": [
+      "net.fetch",
+      "fs.read",
+      "storage.kv",
+      "script.eval"
+    ],
+    "repo": "flow-registry/flow-package",
+    "path": "flows/proxy-subscription",
+    "distUrl": "https://github.com/flow-registry/flow-package/releases/download/proxy-subscription-v1.0.0/proxy-subscription.flow",
+    "sha256": "ea0d95c26308ac2ae4002b78456d229722489032fa3609b4a00361191f38c6b9",
+    "seed": true
+  },
+  {
+    "id": "spcx-quotes",
+    "name": "SPCX 行情",
+    "author": "assistbox",
+    "description": "SpaceX（usSPCX.OQ）腾讯行情：收盘/涨跌/盘后价、12 日 sparkline、Plotly 折线与最新快讯。两次 net.fetch 取数，js 步只解析不落盘。",
+    "version": "1.0.0",
+    "minApp": "0.1.0",
+    "tags": [
+      "行情",
+      "量化",
+      "demo"
+    ],
+    "capabilities": [
+      "net.fetch",
+      "fs.read",
+      "script.eval"
+    ],
+    "repo": "flow-registry/flow-package",
+    "path": "flows/spcx-quotes",
+    "distUrl": "https://github.com/flow-registry/flow-package/releases/download/spcx-quotes-v1.0.0/spcx-quotes.flow",
+    "sha256": "554704e7ec1b4deb01c12c77aec3592db57ba5be02e9b31d972533e39842f9c0",
+    "seed": true
+  },
+  {
+    "id": "weather-shanghai",
+    "name": "上海天气",
+    "author": "assistbox",
+    "description": "腾讯 wis.qq.com 实况 + 8 日预报，10 分钟一刷；落定后 emit `weather.updated` 信号，可被 on: 触发的下游 flow 订阅。",
+    "version": "1.0.0",
+    "minApp": "0.1.0",
+    "tags": [
+      "天气",
+      "signal",
+      "demo"
+    ],
+    "capabilities": [
+      "net.fetch",
+      "fs.read",
+      "script.eval"
+    ],
+    "repo": "flow-registry/flow-package",
+    "path": "flows/weather-shanghai",
+    "distUrl": "https://github.com/flow-registry/flow-package/releases/download/weather-shanghai-v1.0.0/weather-shanghai.flow",
+    "sha256": "2ba6c3f26ff74c0e95ea5db16f3866d13635be7fe730c63af0d9dcf294e8fe11",
+    "seed": true
+  }
+]

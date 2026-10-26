@@ -1,0 +1,28 @@
+flow: "1"
+name: "SPCX 行情"
+description: "SpaceX（usSPCX.OQ）腾讯行情：收盘/涨跌/盘后价、12 日 sparkline、Plotly 折线与最新快讯。两次 net.fetch 取数，js 步只解析不落盘。"
+
+trigger:
+  every: "5m"
+
+context:
+  onStepError: ABORT_FLOW
+  maxFires: 10000
+
+import:
+  - "scripts/quote.js"
+
+flowView:
+  cell: "views/flow.cell.yaml"
+
+steps:
+  - tool: net.fetch
+    arguments:
+      url: "https://web.ifzq.gtimg.cn/appstock/app/usfqkline/get?param=usSPCX.OQ,day,,,12,qfq"
+      path: "spcx_kline.json"
+  - tool: net.fetch
+    arguments:
+      url: "https://proxy.finance.qq.com/ifzqgtimg/appstock/news/info/search?symbol=usSPCX.OQ&page=1&n=5&type=2"
+      path: "spcx_news.json"
+  - js: quote.render
+    arguments: {}

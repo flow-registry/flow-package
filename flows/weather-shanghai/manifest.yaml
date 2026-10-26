@@ -1,0 +1,24 @@
+flow: "1"
+name: "上海天气"
+description: "腾讯 wis.qq.com 实况 + 8 日预报，10 分钟一刷；落定后 emit `weather.updated` 信号，可被 on: 触发的下游 flow 订阅。"
+
+trigger:
+  every: "10m"
+
+context:
+  onStepError: ABORT_FLOW
+  maxFires: 10000
+
+import:
+  - "scripts/weather.js"
+
+flowView:
+  cell: "views/flow.cell.yaml"
+
+steps:
+  - tool: net.fetch
+    arguments:
+      url: "https://wis.qq.com/weather/common?source=pc&weather_type=observe%7Cforecast_24h&province=%E4%B8%8A%E6%B5%B7&city=%E4%B8%8A%E6%B5%B7"
+      path: "weather.json"
+  - js: weather.render
+    arguments: {}

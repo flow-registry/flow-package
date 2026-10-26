@@ -1,0 +1,34 @@
+cell:
+  cols: 2
+  rows: 1
+refresh:
+  on: fire
+root:
+  column:
+    id: flow.cell.root
+    gap: small
+    children:
+      - banner:
+          id: flow.cell.status
+          bind:
+            tone: flow.lastFire.tone
+            text: flow.lastFire.resultText
+          when:
+            visible: hasLastFire
+          actionChild:
+            button:
+              id: flow.cell.open
+              label: 详情
+              actionId: flow.openDetail
+      - progress:
+          id: flow.cell.progress
+          bind:
+            label: flow.lastFire.stepsText
+            value: flow.lastFire.progressValue
+      - text:
+          id: flow.cell.meta
+          variant: caption
+          format: "已触发 {0} 次 · 下次 {1}"
+          args:
+            - flow.fires
+            - flow.nextFireAtText

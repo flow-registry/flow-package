@@ -1,0 +1,25 @@
+name: Validate packages
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install --no-save js-yaml
+      - run: node .github/scripts/validate-flows.mjs
+      - run: node .github/scripts/build-flows.mjs
+      - name: catalog.json matches the tree
+        run: |
+          if [ -n "$(git status --porcelain -- catalog.json)" ]; then
+            echo "catalog.json is stale — commit the output of build-flows.mjs"
+            git diff -- catalog.json || true
+            exit 1
+          fi
